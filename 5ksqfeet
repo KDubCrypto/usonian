@@ -1,0 +1,62 @@
+import cad
+import random
+
+def create_usonian_house(width, length, num_bedrooms, num_bathrooms):
+    """Creates a Usonian-style house with the given dimensions and number of bedrooms and bathrooms."""
+
+    # Create the main floor.
+    main_floor = cad.createRectangle(0, 0, width, length)
+
+    # Add a central courtyard.
+    courtyard = cad.createCircle(width / 2, length / 2, width / 4)
+    main_floor.addCut(courtyard)
+
+    # Add the bedrooms.
+    bedrooms = []
+    for i in range(num_bedrooms):
+        bedroom = cad.createRectangle(width / 4, length / 4, width / 2, length / 2)
+        bedroom.move(width / 4, length / 4)
+        bedrooms.append(bedroom)
+
+    # Add the bathrooms.
+    bathrooms = []
+    for i in range(num_bathrooms):
+        bathroom = cad.createRectangle(width / 8, length / 8, width / 4, length / 4)
+        bathroom.move(width / 8, length / 8)
+        bathrooms.append(bathroom)
+
+    # Add the living room.
+    living_room = cad.createRectangle(width / 2, length / 4, width / 2, length / 2)
+    living_room.move(width / 4, 0)
+
+    # Add the kitchen.
+    kitchen = cad.createRectangle(width / 4, 0, width / 2, length / 2)
+    kitchen.move(0, 0)
+
+    # Add the dining room.
+    dining_room = cad.createRectangle(0, length / 4, width / 2, length / 2)
+    dining_room.move(0, length / 4)
+
+    # Add the roof.
+    roof = cad.createRectangle(0, 0, width, length)
+    roof.move(width / 4, length / 4)
+
+    return main_floor, bedrooms, bathrooms, living_room, kitchen, dining_room, roof
+
+def main():
+    """The main function."""
+
+    # Get the input parameters.
+    width = int(input("Enter the width of the house: "))
+    length = int(input("Enter the length of the house: "))
+    num_bedrooms = int(input("Enter the number of bedrooms: "))
+    num_bathrooms = int(input("Enter the number of bathrooms: "))
+
+    # Create the house.
+    main_floor, bedrooms, bathrooms, living_room, kitchen, dining_room, roof = create_usonian_house(width, length, num_bedrooms, num_bathrooms)
+
+    # Save the house.
+    main_floor.save("my_house.dxf")
+
+if __name__ == "__main__":
+    main()
